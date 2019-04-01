@@ -6,18 +6,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View.*
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.ad.retrofittest.Common_Clases.ErrorHandler.CallbackWrapper
 import com.example.qpony.Network.APIService
 import com.example.qpony.Network.ApiUtils
-import com.example.qpony.Network.Model.Currencies
+import com.example.qpony.Model.Currencies
+import com.example.qpony.RecyclerViews.RecyclerViewMain
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private var apiServiceProfile: APIService? = null
     private val compositeDisposable = CompositeDisposable()
-    private var dateOnly="1999-02-03"
+    private var dateOnly="2007-02-03"
     private var currencyList: MutableList<Currencies> = ArrayList()
 
     private var isLoading = true
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private var previousTotal = 0
     private var viewTreshold = 0
 
-    private val key = "e596a2182f81dbbfe22dc215a420eea1"
+    private val key = "6434613810975d4a8ed1cefc36a09461"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        for(i in 1..9){
+        for(i in 1..7){
             getCurrencies()
         }
 
@@ -100,11 +100,10 @@ class MainActivity : AppCompatActivity() {
                 .subscribeWith(object : CallbackWrapper<Currencies>(baseContext) {
                     override fun onNext(response: Currencies) {
                         currencyList.add(response)
+
                         recyclerAdapter = RecyclerViewMain(currencyList, baseContext)
                         recyclerView!!.adapter = recyclerAdapter
                         progressBar!!.visibility = GONE
-
-
 
                     }}))
     }
@@ -113,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("asdasd", "6")
         progressBar!!.visibility = VISIBLE
         dateOnly =  provideUrl(dateOnly)
-        val url = "http://data.fixer.io/api/$dateOnly?access_key=e596a2182f81dbbfe22dc215a420eea1&symbols=USD,AUD,CAD,PLN,MXN&format=1"
+        val url = "http://data.fixer.io/api/$dateOnly?access_key=$key&symbols=USD,AUD,CAD,PLN,MXN&format=1"
         compositeDisposable.add(apiServiceProfile
         !!.IgetCurrencies(url)
                 .subscribeOn(Schedulers.io())
@@ -134,6 +133,10 @@ class MainActivity : AppCompatActivity() {
                             Log.i("asdasd", "9")
                             val error = response.error.type
                             if(error=="no_rates_available")  Toast.makeText(baseContext, "Brak danych", Toast.LENGTH_SHORT).show()
+                            else if(error == "usage_limit_reached")
+                                Toast.makeText(baseContext, "Osiągnięto limit zapytań dla konta darmowego", Toast.LENGTH_SHORT).show()
+                            else   Toast.makeText(baseContext, "Coś poszło nie tak", Toast.LENGTH_SHORT).show()
+
                         }
 
                         progressBar!!.visibility = GONE

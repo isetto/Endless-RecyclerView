@@ -3,9 +3,7 @@ package com.example.qpony.Network;
 
 
 
-import com.example.qpony.Network.Model.Currencies;
-
-import java.util.List;
+import com.example.qpony.Model.Currencies;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

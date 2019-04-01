@@ -3,7 +3,6 @@ package com.example.ad.retrofittest.Common_Clases.ErrorHandler
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.example.qpony.ErrorHandler.ErrorTypes
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import io.reactivex.observers.DisposableObserver
 import okhttp3.ResponseBody
@@ -37,9 +36,6 @@ open class CallbackWrapper<T>(context: Context) : DisposableObserver<T>() {
                         val status = JSONObject(statusString)
                         val response = e.response()
 
-
-
-                        ErrorTypes.checkType(ctx, status.get("code").toString(), status.get("message").toString())
 
                         Log.e("errorConn2", statusString)
                     } catch (e1: IOException) {

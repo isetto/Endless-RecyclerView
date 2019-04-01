@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Qpony</string>
+    <string name="title_activity_recycler_view_child">recyclerViewChild</string>
 </resources>
