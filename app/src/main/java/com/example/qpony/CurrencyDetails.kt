@@ -7,14 +7,25 @@ import kotlinx.android.synthetic.main.activity_currency_details.*
 
 class CurrencyDetails : AppCompatActivity() {
 
-    private var detailsTV: TextView? = null
+    private var dateTv: TextView? = null
+    private var nameTv: TextView? = null
+    private var valueTv: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_details)
 
-        detailsTV = detailsTv
-        val details = intent.getStringExtra("currency")
-        detailsTV!!.text = details
+        dateTv = dateDetailsTv
+        nameTv = nameDetailsTv
+        valueTv = valueDetailsTv
+
+        val date = intent.getStringExtra("date")
+        val name = intent.getStringExtra("name")
+        val value = intent.getStringExtra("value")
+
+        dateTv!!.text = date
+        nameTv!!.text = name
+        valueTv!!.text = value
     }
 }

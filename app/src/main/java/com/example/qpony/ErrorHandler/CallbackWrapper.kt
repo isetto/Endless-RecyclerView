@@ -1,4 +1,4 @@
-package com.example.ad.retrofittest.Common_Clases.ErrorHandler
+package com.example.qpony.ErrorHandler
 
 import android.content.Context
 import android.util.Log
@@ -23,18 +23,16 @@ open class CallbackWrapper<T>(context: Context) : DisposableObserver<T>() {
     }
 
     override fun onError(e: Throwable) {
+        Toast.makeText(ctx, "Błąd w połączeniu z serwerem", Toast.LENGTH_SHORT).show()
         Log.i("errorConn", e.message)
         Log.i("differentError0", e.localizedMessage)
 
         when (e) {
             is HttpException -> {
-                Log.i("errorConn1", "dziala HttpException")
                 val responseBody = e.response().errorBody()
                 responseBody?.let {
                     try {
                         val statusString = e.response().errorBody()!!.string()
-                        val status = JSONObject(statusString)
-                        val response = e.response()
 
 
                         Log.e("errorConn2", statusString)
@@ -48,14 +46,12 @@ open class CallbackWrapper<T>(context: Context) : DisposableObserver<T>() {
                 }
             }
             is SocketTimeoutException -> {
-                Log.i("errorConn5", "dziala socket")
                 val responseBody = e.stackTrace
                 Log.i("errorConn5.5", responseBody.toString())
             }
             is IOException -> {
-                Log.i("errorConn6", "dziala Io")
                 if (e is com.example.qpony.Network.CheckInternetConn.NoConnectivityException) {
-                    Toast.makeText(ctx, "nie masz internetu", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx, "Brak połączenia z internetem", Toast.LENGTH_SHORT).show()
                 }
             }
             else -> {

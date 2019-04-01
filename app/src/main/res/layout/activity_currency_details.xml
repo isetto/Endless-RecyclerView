@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CurrencyDetails">
+    android:background="@drawable/gradient2"
+    tools:context=".CurrencyDetails"
+    android:gravity="center">
 
-    <TextView
-        android:id="@+id/detailsTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="279dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/gradient"
+        android:padding="10dp"
         android:gravity="center"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dateDetailsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textView"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/nameDetailsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textView"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/valueDetailsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textView"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+</LinearLayout>

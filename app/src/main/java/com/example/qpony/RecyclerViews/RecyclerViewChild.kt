@@ -3,17 +3,18 @@ package com.example.qpony.RecyclerViews
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.qpony.CurrencyDetails
+import com.example.qpony.Model.RateModel
 import com.example.qpony.R
 import kotlinx.android.synthetic.main.activity_recycler_view_child.view.*
 
 
-class RecyclerViewChild(private val ratesList: List<String>) : RecyclerView.Adapter<RecyclerViewChild.MyViewHolder>() {
+class RecyclerViewChild(private val ratesList: List<RateModel>, private val dateString: String) : RecyclerView.Adapter<RecyclerViewChild.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : MyViewHolder
 
@@ -25,18 +26,18 @@ class RecyclerViewChild(private val ratesList: List<String>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-            Log.i("asdqwd1", "work")
-            val example = ratesList[position]
-            Log.i("asdqwd2", example)
+        val rate = ratesList[position]
 
-            holder.currencyTv.text = example
+        holder.currencyNameTv.text = rate.rateName
+        holder.valueTv.text = rate.value.toString()
 
-        holder.currencyTv.setOnClickListener { v ->
-            val context: Context
+        holder.layout.setOnClickListener { v ->
+            val context: Context = v.context
             val intent: Intent
-            context = v.context
             intent = Intent(context, CurrencyDetails::class.java)
-            intent.putExtra("currency", example)
+            intent.putExtra("date", dateString)
+            intent.putExtra("name", rate.rateName)
+            intent.putExtra("value", rate.value.toString())
             context.startActivity(intent)
         }
 
@@ -47,7 +48,9 @@ class RecyclerViewChild(private val ratesList: List<String>) : RecyclerView.Adap
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-       internal var currencyTv: TextView = itemView.currencyChildTvId
+        internal var currencyNameTv: TextView = itemView.nameCurrencyTvId
+        internal var valueTv: TextView = itemView.valueCurrencyTvId
+        internal var layout: LinearLayout = itemView.layoutChildId
 
 
     }

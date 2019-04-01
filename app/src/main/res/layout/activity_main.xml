@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@drawable/gradient2">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
