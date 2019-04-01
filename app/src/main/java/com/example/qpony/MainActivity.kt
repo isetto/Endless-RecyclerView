@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private var totalItemCount = 0
     private var previousTotal = 0
     private var viewTreshold = 0
+    private var isDone = false
+    private var counter = 0
 
 
     private val apiKey = "8ea9f7a4a4bd92a448815976168a9ea1"
@@ -79,17 +81,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
-        for(i in 1..5){
+        getCurrencies()
+
+    }
+
+    fun await (){
+        while(isDone && counter<5){
+            counter++
+            isDone = false
             getCurrencies()
-            Thread.sleep(300)   //TODO: this problem should be solved by awaiting to finish fetch
-            //TODO: and onNext function in getCurrencies, but since fetching is async i don't know how to do it ;/
         }
     }
 
@@ -118,7 +122,14 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(baseContext, "Osiągnięto limit zapytań dla konta darmowego", Toast.LENGTH_SHORT).show()
                             else   Toast.makeText(baseContext, "Coś poszło nie tak", Toast.LENGTH_SHORT).show()
                         }
-                    }}))
+                    }
+
+                    override fun onComplete() {
+                        super.onComplete()
+                        isDone=true
+                        await ()
+                    }
+                }))
     }
 
     fun pagination(){
